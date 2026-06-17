@@ -76,7 +76,7 @@ spec:
       - name: visual-demo-app
         # CHANGE: Replace 'latest' with a specific tag placeholder (e.g., v1.1)
         # This allows Jenkins' 'sed' command to find and update the tag dynamically.
-        image: gauravohra/visualdemocicd:v1.3
+        image: gauravohra/visualdemocicd:v1.5
         ports:
         - containerPort: 80
         resources:
