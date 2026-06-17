@@ -1,0 +1,54 @@
+# ===============================================
+# 1. Create the Namespace Resource
+# ===============================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-environment
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+  namespace: test-environment
+  labels:
+    app: frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+      - name: frontend
+        # CHANGE: Replace 'latest' with a specific tag placeholder (e.g., v1.1)
+        # This allows Jenkins' 'sed' command to find and update the tag dynamically.
+        image: gauravohra/cicdtest:v2.2
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "250m"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-app
+  namespace: test-environment # CHOSEN FIX: Explicitly added namespace to match the deployment
+spec:
+  selector:
+    app: frontend-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
