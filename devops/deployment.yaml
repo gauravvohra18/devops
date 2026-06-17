@@ -28,7 +28,7 @@ spec:
       - name: frontend
         # CHANGE: Replace 'latest' with a specific tag placeholder (e.g., v1.1)
         # This allows Jenkins' 'sed' command to find and update the tag dynamically.
-        image: gauravohra/cicdtest:v2.4.2
+        image: gauravohra/cicdtest:v2.1.0
         ports:
         - containerPort: 80
         resources:
